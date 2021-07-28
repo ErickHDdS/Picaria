@@ -9,7 +9,5 @@
     
 ## Realizado por:
 
-[**Erick H. D. de Souza**](https://github.com/ErickHDdS) e
-
-[**Lucas C. Dornelas**](https://github.com/lucascdornelas)
+[**Erick H. D. de Souza**](https://github.com/ErickHDdS) e [**Lucas C. Dornelas**](https://github.com/lucascdornelas)
 
