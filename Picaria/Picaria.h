@@ -56,6 +56,7 @@ private slots:
     void play(int id);
     void reset();
 
+    void setNeighborhoodOfHole();
     void showAbout();
 
     void updateMode(QAction* action);

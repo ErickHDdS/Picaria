@@ -31,6 +31,9 @@ public:
     int col() const { return m_col; }
     void setCol(int col) { m_col = col; }
 
+    static void setNeighborhood(Hole* hole[], int idGame);
+    Hole *North, *NorthEast, *East, *SouthEast, *South, *SouthWest, *West, *NorthWest;
+
 public slots:
     void reset();
 

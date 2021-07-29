@@ -6,6 +6,9 @@
 #include <QActionGroup>
 #include <QSignalMapper>
 
+#define nineHoles 9
+#define thirteenHoles 13
+
 Picaria::Player state2player(Hole::State state) {
     switch (state) {
         case Hole::RedState:
@@ -38,6 +41,9 @@ Picaria::Picaria(QWidget *parent)
     QObject::connect(ui->actionNew, SIGNAL(triggered(bool)), this, SLOT(reset()));
     QObject::connect(ui->actionQuit, SIGNAL(triggered(bool)), qApp, SLOT(quit()));
     QObject::connect(modeGroup, SIGNAL(triggered(QAction*)), this, SLOT(updateMode(QAction*)));
+
+    QObject::connect(modeGroup, SIGNAL(triggered(QAction*)), this, SLOT(setNeighborhoodOfHole()));
+
     QObject::connect(this, SIGNAL(modeChanged(Picaria::Mode)), this, SLOT(reset()));
     QObject::connect(ui->actionAbout, SIGNAL(triggered(bool)), this, SLOT(showAbout()));
 
@@ -59,12 +65,22 @@ Picaria::Picaria(QWidget *parent)
 
     this->reset();
 
+    Hole::setNeighborhood(this->m_holes, nineHoles);
+
     this->adjustSize();
     this->setFixedSize(this->size());
 }
 
 Picaria::~Picaria() {
     delete ui;
+}
+
+// este metodo instancia os vizinhos de todos os buracos e passa o tipo do seu jogo
+void Picaria::setNeighborhoodOfHole() {
+    if(this->mode() == Picaria::NineHoles)
+        Hole::setNeighborhood(this->m_holes, nineHoles);
+    else
+        Hole::setNeighborhood(this->m_holes, thirteenHoles);
 }
 
 void Picaria::setMode(Picaria::Mode mode) {
