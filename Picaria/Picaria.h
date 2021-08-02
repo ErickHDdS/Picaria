@@ -46,11 +46,16 @@ signals:
 private:
     Ui::Picaria *ui;
     Hole* m_holes[13];
+    Hole* m_nextHole;
     Mode m_mode;
     Player m_player;
     Phase m_phase;
 
     void switchPlayer();
+
+    void moveHole(Hole* hole);
+    void showOptionsHole(Hole* hole);
+    void clearOptionsHole();
 
 private slots:
     void play(int id);

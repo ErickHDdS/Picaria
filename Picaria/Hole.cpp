@@ -40,7 +40,7 @@ QPixmap Hole::stateToPixmap(State state) {
 }
 
 // definindo os vizinhos de cada buraco (vetor de buracos, identificacao do jogo (NineHoles '9' ou ThirteenHoles '13')
-void Hole::setNeighborhood(Hole* hole[], int idGame) {
+void Hole::setNeighborhood(Hole** hole, int idGame) {
     int pos;
     for(int index = 0; index <= 12; index++) {
         if(index == 0) {

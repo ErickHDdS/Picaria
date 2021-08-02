@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Picaria_t {
-    QByteArrayData data[22];
-    char stringdata0[190];
+    QByteArrayData data[23];
+    char stringdata0[212];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -39,26 +39,28 @@ QT_MOC_LITERAL(4, 35, 4), // "mode"
 QT_MOC_LITERAL(5, 40, 4), // "play"
 QT_MOC_LITERAL(6, 45, 2), // "id"
 QT_MOC_LITERAL(7, 48, 5), // "reset"
-QT_MOC_LITERAL(8, 54, 9), // "showAbout"
-QT_MOC_LITERAL(9, 64, 10), // "updateMode"
-QT_MOC_LITERAL(10, 75, 8), // "QAction*"
-QT_MOC_LITERAL(11, 84, 6), // "action"
-QT_MOC_LITERAL(12, 91, 15), // "updateStatusBar"
-QT_MOC_LITERAL(13, 107, 4), // "Mode"
-QT_MOC_LITERAL(14, 112, 9), // "NineHoles"
-QT_MOC_LITERAL(15, 122, 13), // "ThirteenHoles"
-QT_MOC_LITERAL(16, 136, 6), // "Player"
-QT_MOC_LITERAL(17, 143, 9), // "RedPlayer"
-QT_MOC_LITERAL(18, 153, 10), // "BluePlayer"
-QT_MOC_LITERAL(19, 164, 5), // "Phase"
-QT_MOC_LITERAL(20, 170, 9), // "DropPhase"
-QT_MOC_LITERAL(21, 180, 9) // "MovePhase"
+QT_MOC_LITERAL(8, 54, 21), // "setNeighborhoodOfHole"
+QT_MOC_LITERAL(9, 76, 9), // "showAbout"
+QT_MOC_LITERAL(10, 86, 10), // "updateMode"
+QT_MOC_LITERAL(11, 97, 8), // "QAction*"
+QT_MOC_LITERAL(12, 106, 6), // "action"
+QT_MOC_LITERAL(13, 113, 15), // "updateStatusBar"
+QT_MOC_LITERAL(14, 129, 4), // "Mode"
+QT_MOC_LITERAL(15, 134, 9), // "NineHoles"
+QT_MOC_LITERAL(16, 144, 13), // "ThirteenHoles"
+QT_MOC_LITERAL(17, 158, 6), // "Player"
+QT_MOC_LITERAL(18, 165, 9), // "RedPlayer"
+QT_MOC_LITERAL(19, 175, 10), // "BluePlayer"
+QT_MOC_LITERAL(20, 186, 5), // "Phase"
+QT_MOC_LITERAL(21, 192, 9), // "DropPhase"
+QT_MOC_LITERAL(22, 202, 9) // "MovePhase"
 
     },
     "Picaria\0modeChanged\0\0Picaria::Mode\0"
-    "mode\0play\0id\0reset\0showAbout\0updateMode\0"
-    "QAction*\0action\0updateStatusBar\0Mode\0"
-    "NineHoles\0ThirteenHoles\0Player\0RedPlayer\0"
+    "mode\0play\0id\0reset\0setNeighborhoodOfHole\0"
+    "showAbout\0updateMode\0QAction*\0action\0"
+    "updateStatusBar\0Mode\0NineHoles\0"
+    "ThirteenHoles\0Player\0RedPlayer\0"
     "BluePlayer\0Phase\0DropPhase\0MovePhase"
 };
 #undef QT_MOC_LITERAL
@@ -69,22 +71,23 @@ static const uint qt_meta_data_Picaria[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
-       1,   56, // properties
-       3,   60, // enums/sets
+       7,   14, // methods
+       1,   62, // properties
+       3,   66, // enums/sets
        0,    0, // constructors
        0,       // flags
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   44,    2, 0x06 /* Public */,
+       1,    1,   49,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    1,   47,    2, 0x08 /* Private */,
-       7,    0,   50,    2, 0x08 /* Private */,
-       8,    0,   51,    2, 0x08 /* Private */,
-       9,    1,   52,    2, 0x08 /* Private */,
-      12,    0,   55,    2, 0x08 /* Private */,
+       5,    1,   52,    2, 0x08 /* Private */,
+       7,    0,   55,    2, 0x08 /* Private */,
+       8,    0,   56,    2, 0x08 /* Private */,
+       9,    0,   57,    2, 0x08 /* Private */,
+      10,    1,   58,    2, 0x08 /* Private */,
+      13,    0,   61,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -93,7 +96,8 @@ static const uint qt_meta_data_Picaria[] = {
     QMetaType::Void, QMetaType::Int,    6,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 10,   11,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 11,   12,
     QMetaType::Void,
 
  // properties: name, type, flags
@@ -103,17 +107,17 @@ static const uint qt_meta_data_Picaria[] = {
        0,
 
  // enums: name, alias, flags, count, data
-      13,   13, 0x0,    2,   75,
-      16,   16, 0x0,    2,   79,
-      19,   19, 0x0,    2,   83,
+      14,   14, 0x0,    2,   81,
+      17,   17, 0x0,    2,   85,
+      20,   20, 0x0,    2,   89,
 
  // enum data: key, value
-      14, uint(Picaria::NineHoles),
-      15, uint(Picaria::ThirteenHoles),
-      17, uint(Picaria::RedPlayer),
-      18, uint(Picaria::BluePlayer),
-      20, uint(Picaria::DropPhase),
-      21, uint(Picaria::MovePhase),
+      15, uint(Picaria::NineHoles),
+      16, uint(Picaria::ThirteenHoles),
+      18, uint(Picaria::RedPlayer),
+      19, uint(Picaria::BluePlayer),
+      21, uint(Picaria::DropPhase),
+      22, uint(Picaria::MovePhase),
 
        0        // eod
 };
@@ -127,9 +131,10 @@ void Picaria::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 0: _t->modeChanged((*reinterpret_cast< Picaria::Mode(*)>(_a[1]))); break;
         case 1: _t->play((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: _t->reset(); break;
-        case 3: _t->showAbout(); break;
-        case 4: _t->updateMode((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
-        case 5: _t->updateStatusBar(); break;
+        case 3: _t->setNeighborhoodOfHole(); break;
+        case 4: _t->showAbout(); break;
+        case 5: _t->updateMode((*reinterpret_cast< QAction*(*)>(_a[1]))); break;
+        case 6: _t->updateStatusBar(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -193,13 +198,13 @@ int Picaria::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 7)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 6;
+        _id -= 7;
     }
 #ifndef QT_NO_PROPERTIES
     else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty

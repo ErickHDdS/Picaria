@@ -6,8 +6,8 @@
 #include <QActionGroup>
 #include <QSignalMapper>
 
-#define nineHoles 9
-#define thirteenHoles 13
+int nineHoles = 9;
+int thirteenHoles = 13;
 
 Picaria::Player state2player(Hole::State state) {
     switch (state) {
@@ -106,6 +106,63 @@ void Picaria::play(int id) {
 
     hole->setState(player2state(m_player));
     this->switchPlayer();
+
+    if(this->m_phase == Picaria::MovePhase)
+        this->moveHole(hole);
+    if(this->m_phase == Picaria::DropPhase)
+        //this->drop(hole);
+
+    this->updateStatusBar();
+}
+
+// PRECISA MELHORAR ESSE CODIGO
+void Picaria::moveHole(Hole* hole) {
+    if(hole->state() == player2state(this->m_player)) { // verificando se o estado do buraco corresponde a cor do player
+      this->m_nextHole = hole;
+      this->showOptionsHole(hole);
+    }
+
+    if(hole->state() == Hole::SelectableState) {
+        hole->setState(player2state(this->m_player));
+        if(this->m_nextHole != nullptr) {
+            m_nextHole->setState(Hole::EmptyState);
+            m_nextHole = nullptr;
+        }
+        //this->clearOptionsHole();
+    }
+}
+
+void Picaria::showOptionsHole(Hole* hole) {
+    this->clearOptionsHole();   // limpando as opcoes
+
+    if(hole->North->state() == Hole::EmptyState)
+        hole->North->setState(Hole::SelectableState);
+    if(hole->NorthEast->state() == Hole::EmptyState)
+        hole->NorthEast->setState(Hole::SelectableState);
+    if(hole->East->state() == Hole::EmptyState)
+        hole->East->setState(Hole::SelectableState);
+    if(hole->SouthEast->state() == Hole::EmptyState)
+        hole->SouthEast->setState(Hole::SelectableState);
+    if(hole->South->state() == Hole::EmptyState)
+        hole->South->setState(Hole::SelectableState);
+    if(hole->SouthWest->state() == Hole::EmptyState)
+        hole->SouthWest->setState(Hole::SelectableState);
+    if(hole->West->state() == Hole::EmptyState)
+        hole->West->setState(Hole::SelectableState);
+    if(hole->NorthWest->state() == Hole::EmptyState)
+        hole->NorthWest->setState(Hole::SelectableState);
+}
+
+void Picaria::clearOptionsHole() {
+    int lim;
+    if(this->mode() == Picaria::NineHoles)
+        lim = 9;
+    else
+        lim = 13;
+    for(int index = 0; index <=lim-1; index++) {
+        if(this->m_holes[index]->state() == Hole::SelectableState)
+            this->m_holes[index]->setState(Hole::EmptyState);
+    }
 }
 
 void Picaria::reset() {
