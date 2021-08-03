@@ -1,9 +1,8 @@
 #include "Hole.h"
 
 Hole::Hole(QWidget *parent)
-        : QPushButton(parent),
-          m_state(Hole::EmptyState) ,
-          m_row(0), m_col(0) {
+    : QPushButton(parent),
+      m_state(Hole::EmptyState) {
     this->updateHole(m_state);
 
     QObject::connect(this, SIGNAL(stateChanged(State)), this, SLOT(updateHole(State)));
@@ -24,29 +23,27 @@ void Hole::reset() {
     this->updateHole(m_state);
 }
 
-QPixmap Hole::stateToPixmap(State state) {
-    switch (state) {
-        case Hole::EmptyState:
-            return QPixmap(":empty");
-        case Hole::RedState:
-            return QPixmap(":red");
-        case Hole::BlueState:
-            return QPixmap(":blue");
-        case Hole::SelectableState:
-            return QPixmap(":selectable");
-        default:
-            return QPixmap();
-    }
-}
-
 // definindo os vizinhos de cada buraco (vetor de buracos, identificacao do jogo (NineHoles '9' ou ThirteenHoles '13')
+// possivelmente existem logicas melhores pra melhorar esse codigo, mas fui pensando buraco por buruco
 void Hole::setNeighborhood(Hole** hole, int idGame) {
+
+    for(int i = 0; i < 13; i++) {
+        hole[i]->North = nullptr;
+        hole[i]->NorthEast = nullptr;
+        hole[i]->East = nullptr;
+        hole[i]->SouthEast = nullptr;
+        hole[i]->South = nullptr;
+        hole[i]->SouthWest = nullptr;
+        hole[i]->West = nullptr;
+        hole[i]->NorthWest = nullptr;
+    }
+
     int pos;
-    for(int index = 0; index <= 12; index++) {
+    for(int index = 0; index < 13; index++) {
         if(index == 0) {
             pos = index;
-            hole[pos]->North      = nullptr;
-            hole[pos]->NorthEast  = nullptr;
+            //hole[pos]->North      = nullptr;
+            //hole[pos]->NorthEast  = nullptr;
             hole[pos]->East       = hole[1];
 
             if(idGame == 9)
@@ -55,15 +52,15 @@ void Hole::setNeighborhood(Hole** hole, int idGame) {
                 hole[pos]->SouthEast  = hole[3];
 
             hole[pos]->South      = hole[5];
-            hole[pos]->SouthWest  = nullptr;
-            hole[pos]->West       = nullptr;
-            hole[pos]->NorthWest  = nullptr;
+            //hole[pos]->SouthWest  = nullptr;
+            //hole[pos]->West       = nullptr;
+            //hole[pos]->NorthWest  = nullptr;
         }
 
         if(index == 1) {
             pos = index;
-            hole[pos]->North      = nullptr;
-            hole[pos]->NorthEast  = nullptr;
+            //hole[pos]->North      = nullptr;
+            //hole[pos]->NorthEast  = nullptr;
             hole[pos]->East       = hole[2];
 
             if(idGame == 9)
@@ -79,15 +76,15 @@ void Hole::setNeighborhood(Hole** hole, int idGame) {
                 hole[pos]->SouthWest  = hole[3];
 
             hole[pos]->West       = hole[0];
-            hole[pos]->NorthWest  = nullptr;
+            //hole[pos]->NorthWest  = nullptr;
         }
 
         if(index == 2) {
             pos = index;
-            hole[pos]->North      = nullptr;
-            hole[pos]->NorthEast  = nullptr;
-            hole[pos]->East       = nullptr;
-            hole[pos]->SouthEast  = nullptr;
+            //hole[pos]->North      = nullptr;
+            //hole[pos]->NorthEast  = nullptr;
+            //hole[pos]->East       = nullptr;
+            //hole[pos]->SouthEast  = nullptr;
             hole[pos]->South      = hole[7];
 
             if(idGame == 9)
@@ -101,30 +98,30 @@ void Hole::setNeighborhood(Hole** hole, int idGame) {
         if(index == 3) {
             pos = index;
             if(idGame == 9) {
-                hole[pos]->North      = nullptr;
+                /*hole[pos]->North      = nullptr;
                 hole[pos]->NorthEast  = nullptr;
                 hole[pos]->East       = nullptr;
                 hole[pos]->SouthEast  = nullptr;
                 hole[pos]->South      = nullptr;
                 hole[pos]->SouthWest  = nullptr;
                 hole[pos]->West       = nullptr;
-                hole[pos]->NorthWest  = nullptr;
+                hole[pos]->NorthWest  = nullptr;*/
             }
             else {
-                hole[pos]->North      = nullptr;
+                //hole[pos]->North      = nullptr;
                 hole[pos]->NorthEast  = hole[1];
-                hole[pos]->East       = nullptr;
+                //hole[pos]->East       = nullptr;
                 hole[pos]->SouthEast  = hole[6];
-                hole[pos]->South      = nullptr;
+                //hole[pos]->South      = nullptr;
                 hole[pos]->SouthWest  = hole[5];
-                hole[pos]->West       = nullptr;
+                //hole[pos]->West       = nullptr;
                 hole[pos]->NorthWest  = hole[0];
             }
         }
 
         if(index == 4) {
             pos = index;
-            if(idGame == 9) {
+            if(idGame == 9) {/*
                 hole[pos]->North      = nullptr;
                 hole[pos]->NorthEast  = nullptr;
                 hole[pos]->East       = nullptr;
@@ -132,16 +129,16 @@ void Hole::setNeighborhood(Hole** hole, int idGame) {
                 hole[pos]->South      = nullptr;
                 hole[pos]->SouthWest  = nullptr;
                 hole[pos]->West       = nullptr;
-                hole[pos]->NorthWest  = nullptr;
+                hole[pos]->NorthWest  = nullptr;*/
             }
             else {
-                hole[pos]->North      = nullptr;
+                //hole[pos]->North      = nullptr;
                 hole[pos]->NorthEast  = hole[2];
-                hole[pos]->East       = nullptr;
+                //hole[pos]->East       = nullptr;
                 hole[pos]->SouthEast  = hole[7];
-                hole[pos]->South      = nullptr;
+                //hole[pos]->South      = nullptr;
                 hole[pos]->SouthWest  = hole[6];
-                hole[pos]->West       = nullptr;
+                //hole[pos]->West       = nullptr;
                 hole[pos]->NorthWest  = hole[1];
             }
         }
@@ -163,9 +160,9 @@ void Hole::setNeighborhood(Hole** hole, int idGame) {
                 hole[pos]->SouthEast  = hole[8];
 
             hole[pos]->South      = hole[10];
-            hole[pos]->SouthWest  = nullptr;
-            hole[pos]->West       = nullptr;
-            hole[pos]->NorthWest  = nullptr;
+            //hole[pos]->SouthWest  = nullptr;
+            //hole[pos]->West       = nullptr;
+            //hole[pos]->NorthWest  = nullptr;
         }
 
         if(index == 6) {
@@ -202,9 +199,9 @@ void Hole::setNeighborhood(Hole** hole, int idGame) {
         if(index == 7) {
             pos = index;
             hole[pos]->North      = hole[2];
-            hole[pos]->NorthEast  = nullptr;
-            hole[pos]->East       = nullptr;
-            hole[pos]->SouthEast  = nullptr;
+            //hole[pos]->NorthEast  = nullptr;
+            //hole[pos]->East       = nullptr;
+            //hole[pos]->SouthEast  = nullptr;
             hole[pos]->South      = hole[12];
 
             if(idGame == 9)
@@ -222,7 +219,7 @@ void Hole::setNeighborhood(Hole** hole, int idGame) {
 
         if(index == 8) {
             pos = index;
-            if(idGame == 9) {
+            if(idGame == 9) {/*
                 hole[pos]->North      = nullptr;
                 hole[pos]->NorthEast  = nullptr;
                 hole[pos]->East       = nullptr;
@@ -230,23 +227,23 @@ void Hole::setNeighborhood(Hole** hole, int idGame) {
                 hole[pos]->South      = nullptr;
                 hole[pos]->SouthWest  = nullptr;
                 hole[pos]->West       = nullptr;
-                hole[pos]->NorthWest  = nullptr;
+                hole[pos]->NorthWest  = nullptr;*/
             }
             else {
-                hole[pos]->North      = nullptr;
+                //hole[pos]->North      = nullptr;
                 hole[pos]->NorthEast  = hole[6];
-                hole[pos]->East       = nullptr;
+                //hole[pos]->East       = nullptr;
                 hole[pos]->SouthEast  = hole[11];
-                hole[pos]->South      = nullptr;
+                //hole[pos]->South      = nullptr;
                 hole[pos]->SouthWest  = hole[10];
-                hole[pos]->West       = nullptr;
+                //hole[pos]->West       = nullptr;
                 hole[pos]->NorthWest  = hole[5];
             }
 
         }
         if(index == 9) {
             pos = index;
-            if(idGame == 9) {
+            if(idGame == 9) {/*
                 hole[pos]->North      = nullptr;
                 hole[pos]->NorthEast  = nullptr;
                 hole[pos]->East       = nullptr;
@@ -254,16 +251,16 @@ void Hole::setNeighborhood(Hole** hole, int idGame) {
                 hole[pos]->South      = nullptr;
                 hole[pos]->SouthWest  = nullptr;
                 hole[pos]->West       = nullptr;
-                hole[pos]->NorthWest  = nullptr;
+                hole[pos]->NorthWest  = nullptr;*/
             }
             else {
-                hole[pos]->North      = nullptr;
+                //hole[pos]->North      = nullptr;
                 hole[pos]->NorthEast  = hole[7];
-                hole[pos]->East       = nullptr;
+                //hole[pos]->East       = nullptr;
                 hole[pos]->SouthEast  = hole[12];
-                hole[pos]->South      = nullptr;
+                //hole[pos]->South      = nullptr;
                 hole[pos]->SouthWest  = hole[11];
-                hole[pos]->West       = nullptr;
+                //hole[pos]->West       = nullptr;
                 hole[pos]->NorthWest  = hole[6];
             }
         }
@@ -278,11 +275,11 @@ void Hole::setNeighborhood(Hole** hole, int idGame) {
                 hole[pos]->NorthEast  = hole[8];
 
             hole[pos]->East       = hole[11];
-            hole[pos]->SouthEast  = nullptr;
+            /*hole[pos]->SouthEast  = nullptr;
             hole[pos]->South      = nullptr;
             hole[pos]->SouthWest  = nullptr;
             hole[pos]->West       = nullptr;
-            hole[pos]->NorthWest  = nullptr;
+            hole[pos]->NorthWest  = nullptr;*/
         }
 
         if(index == 11) {
@@ -294,10 +291,10 @@ void Hole::setNeighborhood(Hole** hole, int idGame) {
             else
                 hole[pos]->NorthEast  = hole[9];
 
-            hole[pos]->East       = hole[12];
+            hole[pos]->East       = hole[12];/*
             hole[pos]->SouthEast  = nullptr;
             hole[pos]->South      = nullptr;
-            hole[pos]->SouthWest  = nullptr;
+            hole[pos]->SouthWest  = nullptr;*/
             hole[pos]->West       = hole[10];
 
             if(idGame == 9)
@@ -308,12 +305,12 @@ void Hole::setNeighborhood(Hole** hole, int idGame) {
 
         if(index == 12) {
             pos = index;
-            hole[pos]->North      = hole[7];
+            hole[pos]->North      = hole[7];/*
             hole[pos]->NorthEast  = nullptr;
             hole[pos]->East       = nullptr;
             hole[pos]->SouthEast  = nullptr;
-            hole[pos]->South      = hole[12];
-            hole[pos]->SouthWest  = nullptr;
+            hole[pos]->South      = nullptr;
+            hole[pos]->SouthWest  = nullptr;*/
             hole[pos]->West       = hole[11];
 
             if(idGame == 9)
@@ -321,6 +318,21 @@ void Hole::setNeighborhood(Hole** hole, int idGame) {
             else
                 hole[pos]->NorthWest  = hole[9];
         }
+    }
+}
+
+QPixmap Hole::stateToPixmap(State state) {
+    switch (state) {
+    case Hole::EmptyState:
+        return QPixmap(":empty");
+    case Hole::RedState:
+        return QPixmap(":red");
+    case Hole::BlueState:
+        return QPixmap(":blue");
+    case Hole::SelectableState:
+        return QPixmap(":selectable");
+    default:
+        return QPixmap();
     }
 }
 

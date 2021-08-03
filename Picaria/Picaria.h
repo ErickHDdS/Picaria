@@ -39,30 +39,38 @@ public:
 
     Picaria::Mode mode() const { return m_mode; }
     void setMode(Picaria::Mode mode);
+    Hole* holeAt(int row, int col) const;
 
 signals:
     void modeChanged(Picaria::Mode mode);
+    void gameOver(Picaria::Player player);
 
 private:
     Ui::Picaria *ui;
-    Hole* m_holes[13];
     Hole* m_nextHole;
+    Hole* m_holes[13];
     Mode m_mode;
     Player m_player;
     Phase m_phase;
+    int m_dropCount;
 
     void switchPlayer();
 
+    void dropHole(Hole* hole);
     void moveHole(Hole* hole);
-    void showOptionsHole(Hole* hole);
+    void showSelectableOptionsHole(Hole* hole);
     void clearOptionsHole();
+
+    bool isGameOver();
 
 private slots:
     void play(int id);
     void reset();
 
-    void setNeighborhoodOfHole();
-    void showAbout();
+    void setNeighborhood();                     // Por algum motivo, parou de alertar erros com ele aqui :/
+
+    void showAboutPanel();
+    void showEndGamePanel(Picaria::Player);
 
     void updateMode(QAction* action);
     void updateStatusBar();

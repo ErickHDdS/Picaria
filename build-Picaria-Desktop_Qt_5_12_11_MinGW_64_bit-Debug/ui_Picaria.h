@@ -78,10 +78,11 @@ public:
         action9holes = new QAction(Picaria);
         action9holes->setObjectName(QString::fromUtf8("action9holes"));
         action9holes->setCheckable(true);
-        action9holes->setChecked(true);
+        action9holes->setChecked(false);
         action13holes = new QAction(Picaria);
         action13holes->setObjectName(QString::fromUtf8("action13holes"));
         action13holes->setCheckable(true);
+        action13holes->setChecked(true);
         centralwidget = new QWidget(Picaria);
         centralwidget->setObjectName(QString::fromUtf8("centralwidget"));
         centralwidget->setStyleSheet(QString::fromUtf8("#centralwidget { background: url(':/grid'); }"));
