@@ -96,7 +96,7 @@ void Picaria::setNeighborhood(){
 void Picaria::switchPlayer() {
     this->clearOptionsHole();           // limpa as opcoes de escolha
 
-    if(this->isGameOver())              // verifica se o jogo acabou
+    if(this->isEndGame())               // verifica se o jogo acabou
         emit gameOver(this->m_player);
 
     m_player = m_player == Picaria::RedPlayer ?
@@ -144,20 +144,35 @@ void Picaria::dropHole(Hole* hole) {
 
 /*********************TENTEI MELHORAR, MAS TALVEZ DE PRA MELHORAR AINDA MAIS*****************************************/
 void Picaria::moveHole(Hole* hole){
-    if(hole->state() == player2state(this->m_player)){
-        this->m_nextHole = hole;                        // Proximo buraco a ser tratado
-        this->showSelectableOptionsHole(hole);          // Mostrando as opcoes de escolha
-    }
 
-    if(hole->state() == Hole::SelectableState){
-        hole->setState(player2state(this->m_player));   // atualiza o estado do buraco
-
-        if(this->m_nextHole != nullptr){
-             m_nextHole->setState(Hole::EmptyState);    // set estado vazio
-             m_nextHole = nullptr;                      // esvazia o buraco que foi tratado
+    if(m_phase == Picaria::MovePhase && hole->state() == Hole::SelectableState) {
+        hole->setState(player2state(this->m_player));           // atualiza o estado do buraco
+        if(this->m_nextHole != nullptr) {
+            m_nextHole->setState(Hole::EmptyState);             // setando o antigo buraco para estado vazio
+            m_nextHole = nullptr;                               // esvazia o buraco que foi tratado
         }
-            this->switchPlayer();                       // mudar a vez do jogador
+        this->switchPlayer();                                   // verificar se houve o fim de jogo e mudar o player
     }
+
+    else if(m_phase == Picaria::MovePhase && hole->state() == player2state(this->m_player)) {
+            this->m_nextHole = hole;                            // Proximo buraco a ser tratado
+            this->showSelectableOptionsHole(m_nextHole);        // Mostrando as opcoes de escolha
+    }
+
+
+/*    if(hole->state() == player2state(this->m_player)) {
+        this->m_nextHole = hole;                            // Proximo buraco a ser tratado
+        this->showSelectableOptionsHole(m_nextHole);        // Mostrando as opcoes de escolha
+    }
+
+     if(hole->state() == Hole::SelectableState) {
+        hole->setState(player2state(this->m_player));       // atualiza o estado do buraco
+        if(this->m_nextHole != nullptr){
+             m_nextHole->setState(Hole::EmptyState);        // setando o antigo buraco para estado vazio
+             m_nextHole = nullptr;                          // esvazia o buraco que foi tratado
+        }
+         this->switchPlayer();                              // mudar a vez do jogador
+    }*/
 }
 
 void SetSelectableOptionHole(Hole* hole) {
@@ -166,8 +181,9 @@ void SetSelectableOptionHole(Hole* hole) {
 }
 
 void Picaria::showSelectableOptionsHole(Hole* hole){
-    this->clearOptionsHole();                   // limpando as opcoes
+    this->clearOptionsHole();                           // limpando as opcoes
 
+    // setando as opcoes de movimentos do player
     SetSelectableOptionHole((hole->North));
     SetSelectableOptionHole((hole->NorthEast));
     SetSelectableOptionHole((hole->East));
@@ -178,6 +194,7 @@ void Picaria::showSelectableOptionsHole(Hole* hole){
     SetSelectableOptionHole((hole->NorthWest));
 }
 
+// limpando as opcoes de movimentos do player
 void Picaria::clearOptionsHole(){
     for(int index = 0; index < thirteenHoles; index++){
         if(this->m_holes[index]->state() == Hole::SelectableState)
@@ -220,7 +237,7 @@ bool checkNeighborhoodOfHole(Hole* hole, Picaria::Player player) {
         return false;
 }
 
-bool Picaria::isGameOver(){
+bool Picaria::isEndGame(){
     //qDebug() << (this->mode() == Picaria::NineHoles ? nineHoles : thirteenHoles);
     int countAliggnmentNorthSouth, countAliggnmentNorthEastSouthWest, countAliggnmentEastWest, countAliggnmentNorthWestSouthEast;
 

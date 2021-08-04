@@ -61,7 +61,7 @@ private:
     void showSelectableOptionsHole(Hole* hole);
     void clearOptionsHole();
 
-    bool isGameOver();
+    bool isEndGame();
 
 private slots:
     void play(int id);
