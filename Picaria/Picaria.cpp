@@ -109,11 +109,11 @@ void Picaria::play(int id) {
 
     /*
     qDebug() << "row: " << hole->row();
-    //qDebug() << "col: " << hole->col();
-    //qDebug() << "clicked on: " << hole->objectName();
+    qDebug() << "col: " << hole->col();
+    qDebug() << "clicked on: " << hole->objectName();
 
-    //hole->setState(player2state(m_player));
-    //this->switchPlayer();
+    hole->setState(player2state(m_player));
+    this->switchPlayer();
     */
 
     Q_ASSERT(hole != nullptr);
@@ -186,11 +186,11 @@ void Picaria::clearOptionsHole(){
 }
 
 void Picaria::reset() {
-    for (int id = 0; id < thirteenHoles; ++id) {
-        Hole* hole = m_holes[id];
+    for (int index = 0; index < thirteenHoles; ++index) {
+        Hole* hole = m_holes[index];
         hole->reset();
 
-        switch (id) {
+        switch (index) {
         case 3:
         case 4:
         case 8:
@@ -212,37 +212,54 @@ void Picaria::reset() {
     this->updateStatusBar();
 }
 
-Hole* Picaria::holeAt(int row, int col) const {
-    if (row >= 0 && row < 3 &&
-        col >= 0 && col < 3) {
-        int index = row * 3 + col;
-        return m_holes[index];
-    } else {
-        return nullptr;
-    }
+// verificar se o hole que o player mexeu possui vizinho
+bool checkNeighborhoodOfHole(Hole* hole, Picaria::Player player) {
+    if((hole != nullptr) && (hole->state() == player2state(player)))
+        return true;
+    else
+        return false;
 }
 
-bool checkAlignment(Hole* hole1, Hole* hole2, Picaria::Player player) {
-    if((hole1 != nullptr) && (hole1->state() == player2state(player)) && (hole2 != nullptr) && (hole2->state() == player2state(player)))
-        return true;
-    return false;
-}
-/*******************************PRINCIPAL****COMECEI A ADAPTAR, MAS FALTA AINDA****************************************************************************/
 bool Picaria::isGameOver(){
-    bool alignmentAnswer = false;
-    for(int id = 0; id < 13; ++id){
-        if(this->m_holes[id]->state() == player2state(m_player)){
-            if(checkAlignment(this->m_holes[id]->North, this->m_holes[id]->South, m_player))                // VERTICAL
-                alignmentAnswer = true;
-            else if(checkAlignment(this->m_holes[id]->NorthEast, this->m_holes[id]->SouthWest, m_player))   // DIAGONAL(DA DIREITA PARA ESQUERDA)
-                alignmentAnswer = true;
-            else if(checkAlignment(this->m_holes[id]->East, this->m_holes[id]->West, m_player))             // HORIZONTAL
-                alignmentAnswer = true;
-            else if(checkAlignment(this->m_holes[id]->NorthWest, this->m_holes[id]->SouthEast, m_player))   // DIAGONAL(DA ESQUERDA PARA DIREITA)
-                alignmentAnswer = true;
+    //qDebug() << (this->mode() == Picaria::NineHoles ? nineHoles : thirteenHoles);
+    int countAliggnmentNorthSouth, countAliggnmentNorthEastSouthWest, countAliggnmentEastWest, countAliggnmentNorthWestSouthEast;
+
+    for(int index = 0; index < (this->mode() == Picaria::NineHoles ? nineHoles : thirteenHoles); ++index) {     // verificando se todos os buracos possuem vizinhos da mesma cor
+        countAliggnmentNorthSouth = 1, countAliggnmentNorthEastSouthWest = 1, countAliggnmentEastWest = 1, countAliggnmentNorthWestSouthEast = 1;
+        if(this->m_holes[index]->state() == player2state(m_player)){
+            if(this->mode() == Picaria::NineHoles) {
+                while((index == 3) || (index == 4) || (index == 8) || (index == 9))                             // Se for NineHoles, esses buracos nao existem
+                        index++;
+            }
+
+            if(checkNeighborhoodOfHole(this->m_holes[index]->North, m_player))                                  // VERIFICAR SE EXISTEM VIZINHOS NA VERTICAL
+                countAliggnmentNorthSouth++;
+            if(checkNeighborhoodOfHole(this->m_holes[index]->South, m_player))
+                countAliggnmentNorthSouth++;
+
+            if(checkNeighborhoodOfHole(this->m_holes[index]->NorthEast, m_player))                              // VERIFICAR SE EXISTEM VIZINHOS NA DIAGONAL(DA DIREITA PARA ESQUERDA)
+                countAliggnmentNorthEastSouthWest++;
+            if(checkNeighborhoodOfHole(this->m_holes[index]->SouthWest, m_player))
+                countAliggnmentNorthEastSouthWest++;
+
+            if(checkNeighborhoodOfHole(this->m_holes[index]->East, m_player))                                   // VERIFICAR SE EXISTEM VIZINHOS NA HORIZONTAL
+                countAliggnmentEastWest++;
+            if(checkNeighborhoodOfHole(this->m_holes[index]->West, m_player))
+                countAliggnmentEastWest++;
+
+            if(checkNeighborhoodOfHole(this->m_holes[index]->NorthWest, m_player))                              // VERIFICAR SE EXISTEM VIZINHOS NA DIAGONAL(DA ESQUERDA PARA DIREITA)
+                countAliggnmentNorthWestSouthEast++;
+            if(checkNeighborhoodOfHole(this->m_holes[index]->SouthEast, m_player))
+                countAliggnmentNorthWestSouthEast++;
         }
+
+        //qDebug() << countAliggnmentNorthSouth << countAliggnmentNorthEastSouthWest << countAliggnmentEastWest << countAliggnmentNorthWestSouthEast;
+
+        if((countAliggnmentNorthSouth == numPartsPlayer) || (countAliggnmentNorthEastSouthWest == numPartsPlayer) || (countAliggnmentEastWest == numPartsPlayer) || (countAliggnmentNorthWestSouthEast == numPartsPlayer))
+            return true;
     }
-    return alignmentAnswer;
+
+    return false;
 }
 
 
