@@ -131,7 +131,7 @@ void Picaria::play(int id) {
 }
 
 void Picaria::dropHole(Hole* hole) {
-    if (hole->state() == Hole::EmptyState) {
+    if (m_phase == Picaria::DropPhase && hole->state() == Hole::EmptyState) {
             hole->setState(player2state(this->m_player));
 
             ++m_dropCount;
@@ -148,13 +148,13 @@ void Picaria::moveHole(Hole* hole){
     if(m_phase == Picaria::MovePhase && hole->state() == Hole::SelectableState) {
         hole->setState(player2state(this->m_player));           // atualiza o estado do buraco
         if(this->m_nextHole != nullptr) {
-            m_nextHole->setState(Hole::EmptyState);             // setando o antigo buraco para estado vazio
-            m_nextHole = nullptr;                               // esvazia o buraco que foi tratado
+            this->m_nextHole->setState(Hole::EmptyState);       // setando o antigo buraco para estado vazio
+            this->m_nextHole = nullptr;                         // esvazia o buraco que foi tratado
         }
         this->switchPlayer();                                   // verificar se houve o fim de jogo e mudar o player
     }
 
-    else if(m_phase == Picaria::MovePhase && hole->state() == player2state(this->m_player)) {
+    if(m_phase == Picaria::MovePhase && hole->state() == player2state(this->m_player)) {
             this->m_nextHole = hole;                            // Proximo buraco a ser tratado
             this->showSelectableOptionsHole(m_nextHole);        // Mostrando as opcoes de escolha
     }
