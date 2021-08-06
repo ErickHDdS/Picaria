@@ -23,6 +23,25 @@ void Hole::reset() {
     this->updateHole(m_state);
 }
 
+QPixmap Hole::stateToPixmap(State state) {
+    switch (state) {
+    case Hole::EmptyState:
+        return QPixmap(":empty");
+    case Hole::RedState:
+        return QPixmap(":red");
+    case Hole::BlueState:
+        return QPixmap(":blue");
+    case Hole::SelectableState:
+        return QPixmap(":selectable");
+    default:
+        return QPixmap();
+    }
+}
+
+void Hole::updateHole(State state) {
+    this->setIcon(Hole::stateToPixmap(state));
+}
+
 // definindo os vizinhos de cada buraco (vetor de buracos, identificacao do jogo (NineHoles '9' ou ThirteenHoles '13')
 // possivelmente existem logicas melhores pra melhorar esse codigo, mas fui pensando buraco por buruco
 void Hole::setNeighborhood(Hole** hole, int idGame) {
@@ -239,23 +258,4 @@ void Hole::setNeighborhood(Hole** hole, int idGame) {
                 hole[pos]->NorthWest    = hole[9];
         }
     }
-}
-
-QPixmap Hole::stateToPixmap(State state) {
-    switch (state) {
-    case Hole::EmptyState:
-        return QPixmap(":empty");
-    case Hole::RedState:
-        return QPixmap(":red");
-    case Hole::BlueState:
-        return QPixmap(":blue");
-    case Hole::SelectableState:
-        return QPixmap(":selectable");
-    default:
-        return QPixmap();
-    }
-}
-
-void Hole::updateHole(State state) {
-    this->setIcon(Hole::stateToPixmap(state));
 }
