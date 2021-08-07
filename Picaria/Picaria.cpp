@@ -219,7 +219,6 @@ bool checkNeighborhoodOfHole(Hole* hole, Picaria::Player player) {
 }
 
 bool Picaria::isEndGame(){
-    //qDebug() << (this->mode() == Picaria::NineHoles ? nineHoles : thirteenHoles);
     int countAliggnmentNorthSouth, countAliggnmentNorthEastSouthWest, countAliggnmentEastWest, countAliggnmentNorthWestSouthEast;
 
     for(int index = 0; index < (this->mode() == Picaria::NineHoles ? nineHoles : thirteenHoles); ++index) {     // verificando se todos os buracos possuem vizinhos da mesma cor
@@ -251,8 +250,6 @@ bool Picaria::isEndGame(){
                 countAliggnmentNorthWestSouthEast++;
         }
 
-        //qDebug() << countAliggnmentNorthSouth << countAliggnmentNorthEastSouthWest << countAliggnmentEastWest << countAliggnmentNorthWestSouthEast;
-
         if((countAliggnmentNorthSouth == numPartsPlayer) || (countAliggnmentNorthEastSouthWest == numPartsPlayer) || (countAliggnmentEastWest == numPartsPlayer) || (countAliggnmentNorthWestSouthEast == numPartsPlayer))
             return true;
     }
@@ -271,13 +268,6 @@ void Picaria::showAboutPanel() {
 void Picaria::showEndGamePanel(Player player) {
     QString playerWinner = nullptr;
     QString playerLoser = nullptr;
-
-    /*
-     if(m_player == Picaria::RedPlayer == player)
-        qDebug() << "RED: ";
-    else
-        qDebug() << "BLUE: ";
-    */
 
     switch (player) {
     case Picaria::RedPlayer:
