@@ -94,9 +94,9 @@ void Picaria::setNeighborhood(){
 }
 
 void Picaria::switchPlayer() {
-    this->clearOptionsHole();           // limpa as opcoes de escolha
+    this->clearOptionsHole();                   // limpa as opcoes de escolha
 
-    if(this->isEndGame())               // verifica se o jogo acabou
+    if(this->isEndGame())                       // verifica se o jogo acabou
         emit gameOver(this->m_player);
 
     m_player = m_player == Picaria::RedPlayer ?
@@ -106,15 +106,6 @@ void Picaria::switchPlayer() {
 
 void Picaria::play(int id) {
     Hole* hole = m_holes[id];
-
-    /*
-    qDebug() << "row: " << hole->row();
-    qDebug() << "col: " << hole->col();
-    qDebug() << "clicked on: " << hole->objectName();
-
-    hole->setState(player2state(m_player));
-    this->switchPlayer();
-    */
 
     Q_ASSERT(hole != nullptr);
 
@@ -142,37 +133,27 @@ void Picaria::dropHole(Hole* hole) {
     }
 }
 
-/*********************TENTEI MELHORAR, MAS TALVEZ DE PRA MELHORAR AINDA MAIS*****************************************/
 void Picaria::moveHole(Hole* hole){
+    if(m_phase == Picaria::MovePhase){
+        switch (hole->state()) {
+            case (Hole::SelectableState):
+                hole->setState(player2state(this->m_player));           // atualiza o estado do buraco
+                if(this->m_nextHole != nullptr) {
+                    this->m_nextHole->setState(Hole::EmptyState);       // setando o antigo buraco para estado vazio
+                    this->m_nextHole = nullptr;                         // esvazia o buraco que foi tratado
+                }
+                this->switchPlayer();                                   // verificar se houve o fim de jogo e mudar o player
+                break;
 
-    if(m_phase == Picaria::MovePhase && hole->state() == Hole::SelectableState) {
-        hole->setState(player2state(this->m_player));           // atualiza o estado do buraco
-        if(this->m_nextHole != nullptr) {
-            this->m_nextHole->setState(Hole::EmptyState);       // setando o antigo buraco para estado vazio
-            this->m_nextHole = nullptr;                         // esvazia o buraco que foi tratado
+            case (Hole::BlueState):
+            case (Hole::RedState):
+                this->m_nextHole = hole;                                // Proximo buraco a ser tratado
+                this->showSelectableOptionsHole(m_nextHole);            // Mostrando as opcoes de escolha
+                break;
+            default:
+                break;
         }
-        this->switchPlayer();                                   // verificar se houve o fim de jogo e mudar o player
     }
-
-    if(m_phase == Picaria::MovePhase && hole->state() == player2state(this->m_player)) {
-            this->m_nextHole = hole;                            // Proximo buraco a ser tratado
-            this->showSelectableOptionsHole(m_nextHole);        // Mostrando as opcoes de escolha
-    }
-
-
-/*    if(hole->state() == player2state(this->m_player)) {
-        this->m_nextHole = hole;                            // Proximo buraco a ser tratado
-        this->showSelectableOptionsHole(m_nextHole);        // Mostrando as opcoes de escolha
-    }
-
-     if(hole->state() == Hole::SelectableState) {
-        hole->setState(player2state(this->m_player));       // atualiza o estado do buraco
-        if(this->m_nextHole != nullptr){
-             m_nextHole->setState(Hole::EmptyState);        // setando o antigo buraco para estado vazio
-             m_nextHole = nullptr;                          // esvazia o buraco que foi tratado
-        }
-         this->switchPlayer();                              // mudar a vez do jogador
-    }*/
 }
 
 void SetSelectableOptionHole(Hole* hole) {

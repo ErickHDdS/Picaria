@@ -67,7 +67,7 @@ private slots:
     void play(int id);
     void reset();
 
-    void setNeighborhood();                     // Por algum motivo, parou de alertar erros com ele aqui :/
+    void setNeighborhood();
 
     void showAboutPanel();
     void showEndGamePanel(Picaria::Player);

@@ -45,7 +45,6 @@ void Hole::updateHole(State state) {
 // definindo os vizinhos de cada buraco (vetor de buracos, identificacao do jogo (NineHoles '9' ou ThirteenHoles '13')
 // possivelmente existem logicas melhores pra melhorar esse codigo, mas fui pensando buraco por buruco
 void Hole::setNeighborhood(Hole** hole, int idGame) {
-
     for(int index = 0; index < 13; index++) {
         hole[index]->North      = nullptr;
         hole[index]->NorthEast  = nullptr;
