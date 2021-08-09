@@ -177,7 +177,7 @@ public:
         hole05->setIconSize(QSize(50, 50));
         hole05->setFlat(true);
         hole05->setProperty("row", QVariant(1));
-        hole05->setProperty("col", QVariant(2));
+        hole05->setProperty("col", QVariant(3));
 
         gridLayout->addWidget(hole05, 2, 5, 1, 2);
 
