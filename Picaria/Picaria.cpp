@@ -146,10 +146,19 @@ void Picaria::moveHole(Hole* hole){
                 break;
 
             case (Hole::BlueState):
+                if(hole->state()==player2state(m_player)) {
+                    this->m_nextHole = hole;                            // Proximo buraco a ser tratado
+                    this->showSelectableOptionsHole(m_nextHole);        // Mostrando as opcoes de escolha
+                 }
+                 break;
+
             case (Hole::RedState):
-                this->m_nextHole = hole;                                // Proximo buraco a ser tratado
-                this->showSelectableOptionsHole(m_nextHole);            // Mostrando as opcoes de escolha
+                if(hole->state()==player2state(m_player)) {
+                    this->m_nextHole = hole;                            // Proximo buraco a ser tratado
+                    this->showSelectableOptionsHole(m_nextHole);
+                }                                                       // Mostrando as opcoes de escolha
                 break;
+
             default:
                 break;
         }
@@ -300,7 +309,7 @@ void Picaria::updateStatusBar() {
     QString player(m_player == Picaria::RedPlayer ? "Red." : "Blue.");
     QString phase(m_phase == Picaria::DropPhase ? "to place" : " to move.");
 
-    QString space = "                       🎮🕹  Picaria  🕹🎮                       ";
+    QString space = "\t\t\t\t\t\t\t\t🎮🕹  Picaria  🕹🎮\t\t\t\t\t\t\t\t";
 
     if(m_player == Picaria::RedPlayer)
         ui->statusbar->showMessage(tr("Phase of:\t\t\t%1%2Player's turn:\t\t\t%3 🔴").arg(phase).arg(space).arg(player));
