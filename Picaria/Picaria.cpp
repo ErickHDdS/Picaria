@@ -155,8 +155,8 @@ void Picaria::moveHole(Hole* hole){
             case (Hole::RedState):
                 if(hole->state()==player2state(m_player)) {
                     this->m_nextHole = hole;                            // Proximo buraco a ser tratado
-                    this->showSelectableOptionsHole(m_nextHole);
-                }                                                       // Mostrando as opcoes de escolha
+                    this->showSelectableOptionsHole(m_nextHole);        // Mostrando as opcoes de escolha
+                }
                 break;
 
             default:
